@@ -54,6 +54,7 @@ if __name__ == '__main__':
     parser.add_argument('--url', type=str, help='url')
     args = parser.parse_args()
     url = args.url
+    url = "https://kc.zhixueyun.com/#/study/subject/detail/3c1838e6-3455-4089-b502-15aca3730fc4"
     if url==None:
         url=input("please input the course url:")
 
@@ -70,15 +71,15 @@ if __name__ == '__main__':
     while studyDone==0:
         studyDone=1
         taskList = driver.find_elements(By.XPATH, '//*[@class="item current-hover"]')
-        print(len(taskList),"course found.")
-        for task in taskList:
-            state = task.find_element(By.XPATH, '//*[@class="small inline-block"]')
-            print(state.text)
-            if state.text == "开始学习" or state.text == "继续学习":
+        stateList = driver.find_elements(By.XPATH, '//*[@class="small inline-block"]')
+        print(len(taskList),"course found.",len(stateList))
+        for i in range(len(taskList)):
+            print(stateList[i].text)
+            if stateList[i].text == "开始学习" or stateList[i].text == "继续学习":
                 studyDone=0
                 #task.click()   #点击进去获取不到新窗口的handle
                 #手动组装course_url
-                course_url = "https://kc.zhixueyun.com/#/study/course/detail/" + "10&" + task.get_attribute('data-resource-id') + "/6/1"
+                course_url = "https://kc.zhixueyun.com/#/study/course/detail/" + "10&" + taskList[i].get_attribute('data-resource-id') + "/6/1"
                 print("find the course:",course_url)
                 driver.switch_to.new_window()
                 time.sleep(1)
