@@ -9,6 +9,7 @@ from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.edge.service import Service
 
 WAIT_TIME=5
 
@@ -44,11 +45,12 @@ if __name__ == '__main__':
     parser.add_argument('--url', type=str, help='url')
     args = parser.parse_args()
     url = args.url
-    # url = "https://kc.zhixueyun.com/#/study/subject/detail/3c1838e6-3455-4089-b502-15aca3730fc4"
+    # url = "https://kc.zhixueyun.com/#/study/subject/detail/e19718ab-2738-4b60-84f3-7ad0e3ee2b14"
     # url = "https://kc.zhixueyun.com/#/study/course/detail/10&b762264b-eda3-455d-83e2-3720874fa9ba/6/1"
     if url==None:
         url=input("please input the course url:")
     #初始化
+    service = Service('D:\Software\Code\python\chromedriver.exe')
     option = ChromeOptions()
     option.add_argument('-mute-audio')
     option.add_argument('--ignore-certificate-errors')
@@ -58,7 +60,8 @@ if __name__ == '__main__':
     option.add_experimental_option('excludeSwitches', ['ignore-certificate-errors'])
     option.add_argument('---ignore-certificate-errors-spki-list')
     option.add_argument('log-level=2')
-    driver = webdriver.Chrome(executable_path='D:\Software\Code\python\chromedriver.exe', options=option)
+    option.service = service
+    driver = webdriver.Chrome(options=option)
     # driver = webdriver.Firefox(executable_path='D:\Software\Code\python\geckodriver.exe', options=option)
     driver.maximize_window()
     driver.get(url)
