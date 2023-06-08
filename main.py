@@ -62,7 +62,8 @@ if __name__ == '__main__':
     option.add_argument('log-level=2')
     option.service = service
     driver = webdriver.Chrome(options=option)
-    # driver = webdriver.Firefox(executable_path='D:\Software\Code\python\geckodriver.exe', options=option)
+    # driver = webdriver.Firefox(executable_path='D:\Software\Code\python\geckodriver.exe', options=option) #firefox
+    # webdriver.PhantomJS #https://phantomjs.org/download.html 无窗口的浏览器？
     driver.maximize_window()
     driver.get(url)
 
